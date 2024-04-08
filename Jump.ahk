@@ -101,7 +101,7 @@ Gui, Submit, NoHide
 id := ""
 SetKeyDelay, 100
 Process, priority, , High
-gosub, GrabRemotePlay
+gosub, GrabFF9
 if  (id = "")
 	return
 gosub, PauseLoop
@@ -229,7 +229,7 @@ loop
 		DllCall("Sleep", "Uint", 100)
 		ControlSend,, {%buttonToPress% up}, ahk_id %id%  ; Release %buttonToPress% key.
 		sleep, 2000
-		gosub, GrabRemotePlay
+		gosub, GrabFF9
 		break
 	}
 	gosub timings
@@ -308,23 +308,23 @@ if (ButtonChoice = 2)
 }
 return
 
-GrabRemotePlay:
-WinGet, remotePlay_id, List, ahk_exe RemotePlay.exe
-if (remotePlay_id = 0)
+GrabFF9:
+WinGet, FF9_id, List, ahk_exe FF9.exe
+if (FF9_id = 0)
 {
-	MsgBox, PS4 Remote Play not found
+	MsgBox, Final Fantasy not found
 	return
 }
-Loop, %remotePlay_id%
+Loop, %FF9_id%
 {
-  id := remotePlay_id%A_Index%
+  id := FF9_id%A_Index%
   WinGetTitle, title, % "ahk_id " id
-  If InStr(title, "PS Remote Play")
+  If InStr(title, "Final Fantasy")
     break
 }	
-WinGetClass, remotePlay_class, ahk_id %id%
+WinGetClass, FF9_class, ahk_id %id%
 WinMove, ahk_id %id%,, 0, 0, 1440, 900
-ControlFocus,, ahk_class %remotePlay_class%
+ControlFocus,, ahk_class %FF9_class%
 WinActivate, ahk_id %id%
 return
 
